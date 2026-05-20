@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoilProve — Precision Nitrogen Optimization</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root {
+  --green-deep: #1a3d0f;
+  --green-main: #2d6a1f;
+  --green-light: #4a9e30;
+  --green-pale: #e8f5e1;
+  --gold: #f0b429;
+  --gold-light: #fef3c7;
+  --soil: #1a1208;
+  --earth: #3d2b1a;
+  --cream: #faf7f2;
+  --white: #ffffff;
+  --gray-100: #f5f3ee;
+  --gray-200: #e8e4dc;
+  --gray-400: #a09880;
+  --gray-600: #6b5c48;
+  --gray-800: #2d2416;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.13);
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--gray-800);
+  line-height: 1.6;
+  font-size: 15px;
+}
+nav {
+  background: var(--soil);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+.nav-logo {
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nav-logo span { color: var(--gold); }
+.nav-logo-icon {
+  width: 32px; height: 32px;
+  background: var(--green-main);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+.nav-tabs { display: flex; gap: 4px; }
+.nav-tab {
+  padding: 8px 18px;
+  border-radius: 8px;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  border: none;
+  background: none;
+  font-family: 'DM Sans', sans-serif;
+}
+.nav-tab:hover { color: var(--white); background: rgba(255,255,255,0.1); }
+.nav-tab.active { color: var(--soil); background: var(--gold); font-weight: 600; }
+.nav-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+}
+.status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--success);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.page { display: none; }
+.page.active { display: block; }
+.hero {
+  background: linear-gradient(135deg, var(--green-deep) 0%, var(--earth) 100%);
+  padding: 80px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(-45deg,transparent,transparent 40px,rgba(240,180,41,0.03) 40px,rgba(240,180,41,0.03) 41px);
+}
+.hero-content { position: relative; max-width: 760px; margin: 0 auto; }
+.hero-tag {
+  display: inline-block;
+  background: rgba(240,180,41,0.15);
+  color: var(--gold);
+  border: 1px solid rgba(240,180,41,0.3);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(2rem,5vw,3.2rem);
+  font-weight: 800;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+.hero h1 .highlight { color: var(--gold); }
+.hero-sub {
+  color: rgba(255,255,255,0.75);
+  font-size: 1.1rem;
+  margin-bottom: 40px;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.hero-stat { text-align: center; }
+.hero-stat-val {
+  font-family: 'Sora', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--gold);
+  display: block;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.hero-stat-lbl { color: rgba(255,255,255,0.6); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gold);
+  color: var(--soil);
+  padding: 14px 32px;
+  border-radius: var(--radius);
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(240,180,41,0.4);
+}
+.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(240,180,41,0.5); }
+.how-it-works { padding: 64px 40px; max-width: 960px; margin: 0 auto; }
+.section-title { font-family: 'Sora', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--soil); margin-bottom: 8px; }
+.section-sub { color: var(--gray-600); margin-bottom: 40px; }
+.steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+.step-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  border: 1.5px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s;
+}
+.step-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--green-light); }
+.step-num {
+  width: 40px; height: 40px;
+  background: var(--green-pale);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--green-main);
+  margin-bottom: 16px;
+}
+.step-card h3 { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 8px; color: var(--soil); }
+.step-card p { color: var(--gray-600); font-size: 0.88rem; line-height: 1.6; }
+.main-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.form-panel {
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1.5px solid var(--gray-200);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+.form-header { background: var(--green-main); padding: 20px 24px; color: var(--white); }
+.form-header h2 { font-family: 'Sora', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+.form-header p { font-size: 0.82rem; opacity: 0.8; }
+.form-body { padding: 24px; }
+.form-section { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--gray-200); }
+.form-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.form-section-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--green-main);
+  margin-bottom: 14px;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.form-row.full { grid-template-columns: 1fr; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group label { font-size: 0.82rem; font-weight: 600; color: var(--gray-600); }
+.form-group input,
+.form-group select {
+  padding: 10px 14px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  color: var(--gray-800);
+  background: var(--gray-100);
+  transition: all 0.2s;
+  outline: none;
+}
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--green-main);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(45,106,31,0.1);
+}
+.form-group .hint { font-size: 0.75rem; color: var(--gray-400); }
+.price-live { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--green-light); margin-top: 4px; }
+.btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: var(--green-main);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-primary:hover { background: var(--green-deep); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.btn-secondary {
+  padding: 10px 20px;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  font-family: 'Sora', sans-serif;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-secondary:hover { background: var(--gray-200); }
+.btn-gold {
+  padding: 12px 24px;
+  background: var(--gold);
+  color: var(--soil);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-gold:hover { background: #e0a820; transform: translateY(-1px); }
+.results-panel { display: flex; flex-direction: column; gap: 20px; }
+.empty-state {
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 2px dashed var(--gray-200);
+  padding: 60px 40px;
+  text-align: center;
+  color: var(--gray-400);
+}
+.empty-state-icon { font-size: 3rem; margin-bottom: 16px; display: block; }
+.empty-state h3 { font-family: 'Sora', sans-serif; font-size: 1.1rem; color: var(--gray-600); margin-bottom: 8px; }
+.result-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1.5px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  animation: slideIn 0.3s ease;
+}
+@keyframes slideIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.card-header {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--gray-200);
+  background: var(--gray-100);
+}
+.card-header h3 { font-family: 'Sora', sans-serif; font-size: 0.9rem; font-weight: 700; color: var(--soil); }
+.card-body { padding: 20px; }
+.savings-hero {
+  background: linear-gradient(135deg, var(--green-deep), var(--green-main));
+  border-radius: var(--radius);
+  padding: 28px;
+  color: var(--white);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: center;
+}
+.savings-main-val {
+  font-family: 'Sora', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--gold);
+  line-height: 1;
+  display: block;
+  margin-bottom: 6px;
+}
+.savings-main-lbl { font-size: 0.85rem; opacity: 0.8; }
+.savings-breakdown { display: flex; flex-direction: column; gap: 10px; }
+.savings-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+.savings-row-val { font-weight: 700; color: var(--gold); }
+.confidence-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.confidence-HIGH { background: #dcfce7; color: #166534; }
+.confidence-MODERATE { background: #fef3c7; color: #92400e; }
+.confidence-LOW { background: #fee2e2; color: #991b1b; }
+.prescription-rates {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  align-items: center;
+  padding: 20px 0;
+}
+.rate-box { text-align: center; padding: 16px; border-radius: var(--radius); border: 2px solid var(--gray-200); }
+.rate-box.current { border-color: var(--danger); background: #fff5f5; }
+.rate-box.recommended { border-color: var(--success); background: #f0fdf4; }
+.rate-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 8px; }
+.rate-box.current .rate-label { color: var(--danger); }
+.rate-box.recommended .rate-label { color: var(--success); }
+.rate-value { font-family: 'Sora', sans-serif; font-size: 2rem; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+.rate-box.current .rate-value { color: var(--danger); }
+.rate-box.recommended .rate-value { color: var(--success); }
+.rate-unit { font-size: 0.8rem; color: var(--gray-600); }
+.rate-arrow { text-align: center; font-size: 1.5rem; color: var(--green-main); }
+.rate-range {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--gray-600);
+  margin-top: 8px;
+  padding: 6px 12px;
+  background: var(--gray-100);
+  border-radius: 20px;
+  display: inline-block;
+}
+.explanation-box {
+  background: var(--gray-100);
+  border-left: 4px solid var(--green-main);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 16px 18px;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--gray-800);
+}
+.peer-farm-card {
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+}
+.peer-farm-card:hover { border-color: var(--green-light); box-shadow: var(--shadow-sm); }
+.peer-farm-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.peer-farm-name { font-weight: 700; font-size: 0.9rem; color: var(--soil); }
+.peer-farm-location { font-size: 0.78rem; color: var(--gray-400); }
+.peer-metrics { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+.peer-metric { text-align: center; padding: 8px 6px; background: var(--gray-100); border-radius: 8px; }
+.peer-metric-val { font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; color: var(--green-main); display: block; line-height: 1; margin-bottom: 4px; }
+.peer-metric-lbl { font-size: 0.68rem; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.5px; }
+.verified-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.72rem; color: var(--green-main); font-weight: 600; }
+#peer-map { height: 300px; border-radius: var(--radius); border: 1.5px solid var(--gray-200); overflow: hidden; }
+.sensitivity-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.sensitivity-table th { background: var(--soil); color: var(--cream); padding: 10px 14px; text-align: left; font-family: 'Sora', sans-serif; font-size: 0.78rem; }
+.sensitivity-table td { padding: 10px 14px; border-bottom: 1px solid var(--gray-200); }
+.sensitivity-table tr:hover td { background: var(--gray-100); }
+.sensitivity-table .current-row td { background: var(--gold-light); font-weight: 600; }
+.warning-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--gold-light);
+  border-left: 4px solid var(--warning);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  color: var(--earth);
+}
+.loading-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26,18,8,0.7);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+.loading-overlay.active { display: flex; }
+.loading-spinner {
+  width: 56px; height: 56px;
+  border: 4px solid rgba(240,180,41,0.3);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to{transform:rotate(360deg)} }
+.loading-text { color: var(--gold); font-family: 'Sora', sans-serif; font-weight: 600; font-size: 1rem; }
+.brief-container { max-width: 800px; margin: 0 auto; padding: 40px; }
+.brief-output {
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1.5px solid var(--gray-200);
+  padding: 36px;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  color: var(--gray-800);
+  box-shadow: var(--shadow-sm);
+  min-height: 200px;
+}
+.brief-actions { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+.outcome-container { max-width: 700px; margin: 0 auto; padding: 40px; }
+.outcome-result {
+  background: linear-gradient(135deg, var(--green-deep), var(--green-main));
+  border-radius: var(--radius);
+  padding: 32px;
+  color: var(--white);
+  margin-bottom: 24px;
+}
+.outcome-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 20px; }
+.outcome-metric { background: rgba(255,255,255,0.1); border-radius: var(--radius-sm); padding: 14px; text-align: center; }
+.outcome-metric-val { font-family: 'Sora', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--gold); display: block; margin-bottom: 4px; }
+.outcome-metric-lbl { font-size: 0.75rem; opacity: 0.75; text-transform: uppercase; letter-spacing: 0.5px; }
+.data-sources { background: var(--gray-100); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 0.8rem; color: var(--gray-600); line-height: 1.8; }
+.data-sources strong { color: var(--gray-800); display: block; margin-bottom: 6px; font-family: 'Sora', sans-serif; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; }
+.toast {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  background: var(--soil);
+  color: var(--white);
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  font-size: 0.88rem;
+  box-shadow: var(--shadow-lg);
+  z-index: 9999;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s;
+  max-width: 320px;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.success { border-left: 4px solid var(--success); }
+.toast.error { border-left: 4px solid var(--danger); }
+@media (max-width: 768px) {
+  .main-layout { grid-template-columns: 1fr; padding: 20px; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .hero-stats { gap: 24px; }
+  nav { padding: 0 16px; }
+  .nav-tabs { gap: 2px; }
+  .nav-tab { padding: 6px 12px; font-size: 0.8rem; }
+  .hero { padding: 48px 20px; }
+  .savings-hero { grid-template-columns: 1fr; }
+  .peer-metrics { grid-template-columns: repeat(2,1fr); }
+  .outcome-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Generating your prescription...</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">🌱</div>
+    Soil<span>Prove</span>
+  </div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('home', this)">Home</button>
+    <button class="nav-tab" onclick="showPage('prescription', this)">Prescription</button>
+    <button class="nav-tab" onclick="showPage('peers', this)">Peer Farms</button>
+    <button class="nav-tab" onclick="showPage('brief', this)">Agronomist Brief</button>
+    <button class="nav-tab" onclick="showPage('outcome', this)">Outcome Tracker</button>
+  </div>
+  <div class="nav-status">
+    <div class="status-dot"></div>
+    Live Data
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-tag">🌾 US Corn Belt · All Crops · Real Data · Real Savings</div>
+      <h1>Corn Belt farmers waste<br><span class="highlight">millions every season</span><br>on nitrogen they do not need</h1>
+      <p class="hero-sub">SoilProve optimizes nitrogen for corn, soybeans, wheat, sorghum, cotton, and rice — using university-validated science and verified peer farm data across 10 Corn Belt states.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="hero-stat-val">$15-30</span><span class="hero-stat-lbl">Savings per acre</span></div>
+        <div class="hero-stat"><span class="hero-stat-val">6</span><span class="hero-stat-lbl">Crops supported</span></div>
+        <div class="hero-stat"><span class="hero-stat-val">15+</span><span class="hero-stat-lbl">Verified peer farms</span></div>
+        <div class="hero-stat"><span class="hero-stat-val">10</span><span class="hero-stat-lbl">Corn Belt states</span></div>
+      </div>
+      <button class="hero-cta" onclick="showPage('prescription', document.querySelectorAll('.nav-tab')[1])">
+        Calculate My Savings
+      </button>
+    </div>
+  </div>
+  <div class="how-it-works">
+    <div class="section-title">How SoilProve Works</div>
+    <div class="section-sub">Three steps from soil test to verified prescription</div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Enter Your Soil Data</h3>
+        <p>Input your county, organic matter percentage, current nitrogen rate, and crop rotation. We use your existing soil test — no new hardware required.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>Get Your Prescription</h3>
+        <p>Our MRTN engine — the same methodology used by University of Illinois and Iowa State Extension — calculates your field-specific optimal nitrogen rate.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>See Peer Proof</h3>
+        <p>We show you what neighboring farms with your soil type applied and what yields they achieved. Real data from verified farms across the Corn Belt.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRESCRIPTION PAGE -->
+<div class="page" id="page-prescription">
+  <div class="main-layout">
+    <div class="form-panel">
+      <div class="form-header">
+        <h2>Generate Your Prescription</h2>
+        <p>Enter your farm details for a field-specific recommendation</p>
+      </div>
+      <div class="form-body">
+        <div class="form-section">
+          <div class="form-section-title">Farm Information</div>
+          <div class="form-row full">
+            <div class="form-group">
+              <label>Farm Name</label>
+              <input type="text" id="farmName" value="My Farm">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>State</label>
+              <select id="stateSelect" onchange="loadCounties(); loadLivePrices(); loadCountyData();">
+                <option value="Missouri">Missouri</option>
+                <option value="Iowa">Iowa</option>
+                <option value="Illinois">Illinois</option>
+                <option value="Indiana">Indiana</option>
+                <option value="Kansas">Kansas</option>
+                <option value="Nebraska">Nebraska</option>
+                <option value="Minnesota">Minnesota</option>
+                <option value="Ohio">Ohio</option>
+                <option value="Kentucky">Kentucky</option>
+                <option value="Tennessee">Tennessee</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>County</label>
+              <select id="countySelect" onchange="loadCountyData()">
+                <option value="Cape Girardeau">Cape Girardeau</option>
+              </select>
+              <input type="text" id="countyManual" 
+              placeholder="Or type any county name to override"
+              style="margin-top:6px;"
+              oninput="if(this.value.trim().length > 0) { 
+              document.getElementById('countySelect').style.opacity='0.4';
+              loadCountyData();
+              } else { 
+              document.getElementById('countySelect').style.opacity='1';
+              loadCountyData();
+           }">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Farm Acres</label>
+              <input type="number" id="farmAcres" value="800" min="10" max="50000">
+            </div>
+            <div class="form-group">
+              <label>Crop</label>
+              <select id="cropSelect">
+                <option value="corn">Corn</option>
+                <option value="soybeans">Soybeans</option>
+                <option value="wheat">Winter Wheat</option>
+                <option value="sorghum">Grain Sorghum</option>
+                <option value="cotton">Cotton</option>
+                <option value="rice">Rice</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row full">
+            <div class="form-group">
+              <label>Crop Rotation</label>
+              <select id="rotationSelect">
+                <option value="corn_soybean_rotation">Corn - Soybean Rotation</option>
+                <option value="corn_corn_rotation">Continuous Corn</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <div class="form-section-title">Soil Data</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Organic Matter %</label>
+              <input type="number" id="omPct" value="2.8" min="0.1" max="10" step="0.1">
+              <span class="hint" id="omHint">County avg: 2.8%</span>
+            </div>
+            <div class="form-group">
+              <label>Soil Test Age (months)</label>
+              <input type="number" id="soilTestAge" value="18" min="1" max="120">
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <div class="form-section-title">Economics</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Current N Rate (lbs/acre)</label>
+              <input type="number" id="currentNRate" value="185" min="0" max="400">
+              <span class="hint" id="countyNHint">County avg: 185 lbs/acre</span>
+            </div>
+            <div class="form-group">
+              <label>Fertilizer Type</label>
+              <select id="fertilizerType" onchange="updateNitrogenCost()">
+                <option value="anhydrous_ammonia">Anhydrous Ammonia</option>
+                <option value="uan_32">UAN 32%</option>
+                <option value="urea_46">Urea 46%</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Corn Price ($/bu)</label>
+              <input type="number" id="cornPrice" value="4.42" min="1" max="12" step="0.01">
+              <div class="price-live" id="cornPriceStatus">Loading live price...</div>
+            </div>
+            <div class="form-group">
+              <label>N Cost ($/lb)</label>
+              <input type="number" id="nCost" value="0.373" min="0.1" max="3" step="0.001">
+              <div class="price-live" id="nCostStatus">Loading live price...</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <div class="form-section-title">For Agronomist Brief</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Your Name</label>
+              <input type="text" id="farmerName" value="James Miller">
+            </div>
+            <div class="form-group">
+              <label>Agronomist Name</label>
+              <input type="text" id="agronomistName" value="Dr. Sarah Johnson">
+            </div>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="generatePrescription()" id="generateBtn">
+          Generate Prescription
+        </button>
+      </div>
+    </div>
+    <div class="results-panel" id="resultsPanel">
+      <div class="empty-state">
+        <span class="empty-state-icon">🌾</span>
+        <h3>Ready to optimize your nitrogen</h3>
+        <p>Fill in your farm details and click Generate Prescription to see your field-specific recommendation with peer farm validation.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PEER FARMS PAGE -->
+<div class="page" id="page-peers">
+  <div class="main-layout" style="grid-template-columns:1fr;">
+    <div>
+      <div class="section-title" style="margin-bottom:8px;">Peer Farm Validation</div>
+      <div class="section-sub" style="margin-bottom:24px;">Verified outcomes from farms across the US Corn Belt</div>
+      <div style="margin-bottom:24px;">
+        <div id="peer-map"></div>
+      </div>
+      <div id="peerFarmsContainer">
+        <div class="empty-state">
+          <span class="empty-state-icon">🗺️</span>
+          <h3>Generate a prescription first</h3>
+          <p>Peer farms will appear after you generate a prescription on the Prescription tab.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AGRONOMIST BRIEF PAGE -->
+<div class="page" id="page-brief">
+  <div class="brief-container">
+    <div class="section-title" style="margin-bottom:8px;">Agronomist Brief</div>
+    <div class="section-sub" style="margin-bottom:28px;">AI-generated professional brief ready to share with your agronomist</div>
+    <div id="briefOutput" class="brief-output">Generate a prescription first, then click the button below to create your agronomist brief.</div>
+    <div class="brief-actions">
+      <button class="btn-gold" onclick="generateBrief()">Generate Agronomist Brief</button>
+      <button class="btn-secondary" onclick="copyBrief()">📋 Copy Email to Send to Agronomist</button>
+    </div>
+  </div>
+</div>
+
+<!-- OUTCOME TRACKER PAGE -->
+<div class="page" id="page-outcome">
+  <div class="outcome-container">
+    <div class="section-title" style="margin-bottom:8px;">Harvest Outcome Tracker</div>
+    <div class="section-sub" style="margin-bottom:28px;">Record your harvest results. Your data helps other farmers in your region.</div>
+    <div class="form-panel" style="margin-bottom:24px;">
+      <div class="form-header">
+        <h2>Record Your Harvest</h2>
+        <p>Takes 30 seconds. Builds the peer pool for next season.</p>
+      </div>
+      <div class="form-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label>County</label>
+            <input type="text" id="outCounty" value="Cape Girardeau" placeholder="County name">
+          </div>
+          <div class="form-group">
+            <label>State</label>
+            <input type="text" id="outState" value="Missouri">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Crop</label>
+            <select id="outCrop">
+              <option value="corn">Corn</option>
+              <option value="wheat">Wheat</option>
+              <option value="sorghum">Sorghum</option>
+              <option value="cotton">Cotton</option>
+              <option value="rice">Rice</option>
+              <option value="soybeans">Soybeans</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Farm Acres</label>
+            <input type="number" id="outAcres" value="800" min="10">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Prescribed N (lbs/acre)</label>
+            <input type="number" id="outPrescribedN" value="164" min="0" max="400">
+          </div>
+          <div class="form-group">
+            <label>Actual N Applied (lbs/acre)</label>
+            <input type="number" id="outActualN" value="164" min="0" max="400">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Actual Yield (bu/acre)</label>
+            <input type="number" id="outActualYield" value="189" min="0" max="500">
+          </div>
+          <div class="form-group">
+            <label>Historical Avg Yield (bu/acre)</label>
+            <input type="number" id="outHistYield" value="184" min="0" max="500">
+          </div>
+        </div>
+        <div class="form-row full">
+          <div class="form-group">
+            <label>Was the growing season normal weather?</label>
+            <select id="outWeather">
+              <option value="true">Yes - normal rainfall and temperatures</option>
+              <option value="false">No - drought, flood, or extreme heat</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="submitOutcome()">Submit Harvest Data</button>
+      </div>
+    </div>
+    <div id="outcomeResult" style="display:none;"></div>
+  </div>
+</div>
+
+<script>
+var currentPrescription = null;
+var currentPeers = null;
+var peerMap = null;
+
+function showPage(pageId, tabEl) {
+  document.querySelectorAll('.page').forEach(function(p) {
+    p.classList.remove('active');
+  });
+  document.querySelectorAll('.nav-tab').forEach(function(t) {
+    t.classList.remove('active');
+  });
+  document.getElementById('page-' + pageId).classList.add('active');
+  if (tabEl) tabEl.classList.add('active');
+  if (pageId === 'peers') {
+    setTimeout(function() {
+      initMap();
+      if (currentPeers) updatePeerMap(currentPeers.farms);
+    }, 200);
+  }
+  if (pageId === 'outcome') {
+    document.getElementById('outcomeResult').style.display = 'none';
+    document.getElementById('outcomeResult').innerHTML = '';
+    var mainCounty = document.getElementById('countyManual').value ||
+                     document.getElementById('countySelect').value;
+    var mainState = document.getElementById('stateSelect').value;
+    var mainAcres = document.getElementById('farmAcres').value;
+    var mainCrop = document.getElementById('cropSelect').value;
+    if (mainCounty) document.getElementById('outCounty').value = mainCounty;
+    if (mainState) document.getElementById('outState').value = mainState;
+    if (mainAcres) document.getElementById('outAcres').value = mainAcres;
+    if (mainCrop) document.getElementById('outCrop').value = mainCrop;
+    if (currentPrescription) {
+      document.getElementById('outPrescribedN').value =
+        currentPrescription.prescription.recommended_n_lbs_ac;
+    }
+  }
+}
+function getCounty() {
+  var manual = document.getElementById('countyManual').value.trim();
+  if (manual && manual.length > 0) {
+    return manual;
+  }
+  return document.getElementById('countySelect').value;
+}
+
+async function loadCounties() {
+  var state = document.getElementById('stateSelect').value;
+  try {
+    var res = await fetch('/api/counties?state=' + encodeURIComponent(state));
+    var data = await res.json();
+    var select = document.getElementById('countySelect');
+    select.innerHTML = '';
+    document.getElementById('countyManual').value = '';
+    document.getElementById('countySelect').style.opacity = '1';
+    data.counties.forEach(function(county) {
+      var opt = document.createElement('option');
+      opt.value = county;
+      opt.textContent = county;
+      select.appendChild(opt);
+    });
+    loadCountyData();
+  } catch(e) {}
+}
+
+async function loadLivePrices() {
+  try {
+    var state = document.getElementById('stateSelect').value || 'Missouri';
+    var county = getCounty() || 'Cape Girardeau';
+    var res = await fetch('/api/prices?state=' + encodeURIComponent(state) +
+                          '&county=' + encodeURIComponent(county));
+    var data = await res.json();
+    if (data.success) {
+      var p = data.prices;
+      document.getElementById('cornPrice').value = p.corn_price_usd_bu.toFixed(2);
+      document.getElementById('nCost').value = p.n_cost_anhydrous_usd_lb.toFixed(3);
+      var cornIcon = p.corn_price_is_live ? 'Live' : 'Cached';
+      var fertIcon = p.fertilizer_is_live ? 'Live' : 'Cached';
+      document.getElementById('cornPriceStatus').textContent =
+        cornIcon + ' - ' + p.corn_price_source;
+      document.getElementById('nCostStatus').textContent =
+        fertIcon + ' - ' + p.fertilizer_source;
+    }
+  } catch(e) {
+    document.getElementById('cornPriceStatus').textContent = 'Using cached USDA AMS prices';
+    document.getElementById('nCostStatus').textContent = 'Using cached USDA AMS prices';
+  }
+}
+
+async function loadCountyData() {
+  var state = document.getElementById('stateSelect').value;
+  var county = getCounty();
+  try {
+    var res = await fetch('/api/county-data?state=' + encodeURIComponent(state) +
+                          '&county=' + encodeURIComponent(county));
+    var data = await res.json();
+    if (data.success) {
+      document.getElementById('omHint').textContent =
+        'County avg: ' + data.avg_om_pct + '%';
+      document.getElementById('countyNHint').textContent =
+        'County avg: ' + data.avg_n_application_lbs_ac + ' lbs/acre';
+      document.getElementById('omPct').value = data.avg_om_pct;
+      document.getElementById('currentNRate').value = data.avg_n_application_lbs_ac;
+    } else {
+      // Unknown county — show state average
+      var stateRes = await fetch('/api/counties?state=' + encodeURIComponent(state));
+      document.getElementById('omHint').textContent =
+        'Enter your soil test OM % (county not in database)';
+      document.getElementById('countyNHint').textContent =
+        'Enter your current N rate (county not in database)';
+      document.getElementById('omPct').value = '';
+      document.getElementById('currentNRate').value = '';
+    }
+  } catch(e) {
+    document.getElementById('omHint').textContent =
+      'Enter your soil test OM % manually';
+    document.getElementById('countyNHint').textContent =
+      'Enter your current N rate manually';
+  }
+}
+
+async function loadCountyData() {
+  var state = document.getElementById('stateSelect').value;
+  var county = getCounty();
+  try {
+    var res = await fetch('/api/county-data?state=' + encodeURIComponent(state) +
+                          '&county=' + encodeURIComponent(county));
+    var data = await res.json();
+    if (data.success) {
+      document.getElementById('omHint').textContent = 'County avg: ' + data.avg_om_pct + '%';
+      document.getElementById('countyNHint').textContent =
+        'County avg: ' + data.avg_n_application_lbs_ac + ' lbs/acre';
+      document.getElementById('omPct').value = data.avg_om_pct;
+      document.getElementById('currentNRate').value = data.avg_n_application_lbs_ac;
+    }
+  } catch(e) {}
+}
+
+async function updateNitrogenCost() {
+  var fertType = document.getElementById('fertilizerType').value;
+  try {
+    var res = await fetch('/api/prices');
+    var data = await res.json();
+    if (data.success) {
+      var costMap = {
+        'anhydrous_ammonia': data.prices.n_cost_anhydrous_usd_lb,
+        'uan_32': data.prices.n_cost_uan32_usd_lb,
+        'urea_46': data.prices.n_cost_urea_usd_lb
+      };
+      document.getElementById('nCost').value =
+        (costMap[fertType] || 0.373).toFixed(3);
+    }
+  } catch(e) {}
+}
+
+async function generatePrescription() {
+  var btn = document.getElementById('generateBtn');
+  showLoading('Generating your prescription...');
+  btn.disabled = true;
+
+  var payload = {
+    farm_name: document.getElementById('farmName').value,
+    farm_acres: parseFloat(document.getElementById('farmAcres').value),
+    county: getCounty(),
+    state: document.getElementById('stateSelect').value,
+    crop: document.getElementById('cropSelect').value,
+    rotation: document.getElementById('rotationSelect').value,
+    om_pct: parseFloat(document.getElementById('omPct').value),
+    soil_test_age_months: parseInt(document.getElementById('soilTestAge').value),
+    corn_price_usd_bu: parseFloat(document.getElementById('cornPrice').value),
+    n_cost_usd_lb: parseFloat(document.getElementById('nCost').value),
+    current_n_rate_lbs_ac: parseFloat(document.getElementById('currentNRate').value),
+    fertilizer_type: document.getElementById('fertilizerType').value,
+    farmer_name: document.getElementById('farmerName').value,
+    agronomist_name: document.getElementById('agronomistName').value
+  };
+
+  try {
+    var res = await fetch('/api/prescription', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) {
+      var err = await res.json();
+      throw new Error(
+        (err.detail && err.detail.errors) ? err.detail.errors.join(', ') : 'Prescription failed'
+      );
+    }
+
+    var data = await res.json();
+    currentPrescription = data;
+    currentPeers = data.peer_validation;
+    renderResults(data);
+    renderPeerFarms(data.peer_validation);
+    showToast('Prescription generated successfully', 'success');
+
+  } catch(e) {
+    showToast('Error: ' + e.message, 'error');
+  } finally {
+    hideLoading();
+    btn.disabled = false;
+  }
+}
+
+function renderResults(data) {
+  var panel = document.getElementById('resultsPanel');
+  var p = data.prescription;
+  var soil = data.soil;
+  var econ = data.economics;
+  var conf = data.confidence;
+
+  var sensitivityRows = '';
+  Object.values(econ.price_sensitivity).forEach(function(row) {
+    var isCurrent = Math.abs(row.corn_price - econ.corn_price_usd_bu) < 0.01;
+    sensitivityRows += '<tr class="' + (isCurrent ? 'current-row' : '') + '">' +
+      '<td>$' + row.corn_price.toFixed(2) + (isCurrent ? ' (current)' : '') + '</td>' +
+      '<td>' + row.recommended_n + ' lbs/ac</td>' +
+      '<td>' + row.price_ratio.toFixed(3) + '</td>' +
+      '</tr>';
+  });
+
+  var warningsHtml = '';
+  if (data.warnings && data.warnings.length > 0) {
+    warningsHtml = '<div class="result-card"><div class="card-header"><h3>Important Notes</h3></div><div class="card-body">';
+    data.warnings.forEach(function(w) {
+      warningsHtml += '<div class="warning-item">' + w + '</div>';
+    });
+    warningsHtml += '</div></div>';
+  }
+
+  var yieldOutcomes = data.peer_validation.yield_outcomes;
+
+  panel.innerHTML =
+    '<div class="savings-hero">' +
+      '<div>' +
+        '<span class="savings-main-val">$' +
+          (p.savings_usd_total > 0 ? Math.round(p.savings_usd_total).toLocaleString() : '0') +
+        '</span>' +
+        '<span class="savings-main-lbl">Projected season savings on ' + p.farm_acres + ' acres</span>' +
+      '</div>' +
+      '<div class="savings-breakdown">' +
+        '<div class="savings-row"><span>Per Acre Savings</span><span class="savings-row-val">$' + p.savings_usd_ac.toFixed(2) + '/acre</span></div>' +
+        '<div class="savings-row"><span>N Reduction</span><span class="savings-row-val">' + Math.round(p.savings_lbs_ac) + ' lbs/acre</span></div>' +
+        '<div class="savings-row"><span>Confidence</span><span class="savings-row-val"><span class="confidence-badge confidence-' + conf.level + '">' + conf.level + '</span></span></div>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="result-card">' +
+      '<div class="card-header"><h3>Nitrogen Prescription</h3>' +
+        '<span class="confidence-badge confidence-' + conf.level + '">' + conf.level + ' Confidence</span>' +
+      '</div>' +
+      '<div class="card-body">' +
+        '<div class="prescription-rates">' +
+          '<div class="rate-box current">' +
+            '<div class="rate-label">Current Rate</div>' +
+            '<div class="rate-value">' + p.current_rate_lbs_ac + '</div>' +
+            '<div class="rate-unit">lbs N/acre</div>' +
+          '</div>' +
+          '<div class="rate-arrow">to</div>' +
+          '<div class="rate-box recommended">' +
+            '<div class="rate-label">Recommended</div>' +
+            '<div class="rate-value">' + p.recommended_n_lbs_ac + '</div>' +
+            '<div class="rate-unit">lbs N/acre</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="text-align:center;">' +
+          '<span class="rate-range">Range: ' + p.range_low_lbs_ac + ' - ' + p.range_high_lbs_ac + ' lbs/acre</span>' +
+        '</div>' +
+        '<div style="margin-top:16px;padding:14px;background:var(--gray-100);border-radius:8px;font-size:0.82rem;color:var(--gray-600);">' +
+          '<strong style="color:var(--gray-800);">Why this rate:</strong> ' +
+          'OM ' + soil.om_pct + '% gives N credit: ' + soil.om_n_credit_lbs_ac + ' lbs/acre | ' +
+          'Base MRTN: ' + soil.base_eonr_lbs_ac + ' lbs/acre | ' +
+          'Price ratio: ' + econ.price_ratio.toFixed(3) +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="result-card">' +
+      '<div class="card-header"><h3>Plain English Explanation</h3><span style="font-size:0.75rem;color:var(--gray-400);">Gemini AI</span></div>' +
+      '<div class="card-body"><div class="explanation-box">' + data.explanation + '</div></div>' +
+    '</div>' +
+
+    '<div class="result-card">' +
+      '<div class="card-header"><h3>Peer Farm Summary</h3>' +
+        '<span style="font-size:0.75rem;color:var(--gray-400);">' + data.peer_validation.total_peers + ' verified farms</span>' +
+      '</div>' +
+      '<div class="card-body">' +
+        '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;">' +
+          '<div style="text-align:center;padding:12px;background:var(--green-pale);border-radius:8px;">' +
+            '<div style="font-family:Sora,sans-serif;font-size:1.4rem;font-weight:800;color:var(--green-main);">' + data.peer_validation.avg_n_applied + '</div>' +
+            '<div style="font-size:0.75rem;color:var(--gray-600);">Avg N Applied (lbs/ac)</div>' +
+          '</div>' +
+          '<div style="text-align:center;padding:12px;background:var(--green-pale);border-radius:8px;">' +
+            '<div style="font-family:Sora,sans-serif;font-size:1.4rem;font-weight:800;color:var(--green-main);">' + data.peer_validation.avg_yield + '</div>' +
+            '<div style="font-size:0.75rem;color:var(--gray-600);">Avg Yield (bu/ac)</div>' +
+          '</div>' +
+          '<div style="text-align:center;padding:12px;background:var(--green-pale);border-radius:8px;">' +
+            '<div style="font-family:Sora,sans-serif;font-size:1.4rem;font-weight:800;color:var(--green-main);">$' + data.peer_validation.avg_cost_saved.toFixed(2) + '</div>' +
+            '<div style="font-size:0.75rem;color:var(--gray-600);">Avg Saved ($/ac)</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">' +
+          '<span style="padding:4px 10px;background:#dcfce7;color:#166534;border-radius:12px;font-size:0.78rem;font-weight:600;">' + yieldOutcomes.improved + ' yield improved</span>' +
+          '<span style="padding:4px 10px;background:#fef3c7;color:#92400e;border-radius:12px;font-size:0.78rem;font-weight:600;">' + yieldOutcomes.neutral + ' yield neutral</span>' +
+          '<span style="padding:4px 10px;background:#fee2e2;color:#991b1b;border-radius:12px;font-size:0.78rem;font-weight:600;">' + yieldOutcomes.declined + ' yield declined</span>' +
+        '</div>' +
+        '<div style="font-size:0.82rem;color:var(--gray-600);padding:10px;background:var(--gray-100);border-radius:8px;margin-bottom:12px;">' +
+          data.peer_validation.data_disclosure +
+        '</div>' +
+        '<button class="btn-secondary" onclick="showPage(\'peers\', document.querySelectorAll(\'.nav-tab\')[2])" style="font-size:0.82rem;">View All Peer Farms</button>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="result-card">' +
+      '<div class="card-header"><h3>Price Sensitivity</h3><span style="font-size:0.75rem;color:var(--gray-400);">How corn price affects your prescription</span></div>' +
+      '<div class="card-body">' +
+        '<table class="sensitivity-table">' +
+          '<thead><tr><th>Corn Price ($/bu)</th><th>Recommended N (lbs/ac)</th><th>Price Ratio</th></tr></thead>' +
+          '<tbody>' + sensitivityRows + '</tbody>' +
+        '</table>' +
+      '</div>' +
+    '</div>' +
+
+    warningsHtml +
+
+    '<div class="data-sources">' +
+      '<strong>Data Sources</strong>' +
+      'Methodology: ' + data.metadata.methodology + '<br>' +
+      'Source: ' + data.metadata.data_source + '<br>' +
+      'Prices: ' + econ.price_source + ' | ' + econ.fertilizer_source + '<br>' +
+      'Generated: ' + new Date(data.metadata.generated_at).toLocaleString() +
+    '</div>';
+}
+
+function renderPeerFarms(peerData) {
+  var container = document.getElementById('peerFarmsContainer');
+  if (!peerData || peerData.total_peers === 0) {
+    container.innerHTML = '<div class="empty-state"><span class="empty-state-icon">🗺️</span><h3>No peer farms found</h3><p>Try a different county or state.</p></div>';
+    return;
+  }
+
+  var cropWarning = '';
+if (currentPrescription && ['soybeans','cotton','rice'].includes(currentPrescription.metadata.crop)) {
+    cropWarning = '<div style="margin-bottom:12px;padding:10px 14px;background:#fef3c7;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;font-size:0.82rem;color:#92400e;">' +
+        'Note: Peer farms shown are from similar soil conditions. Yield data reflects corn comparisons — your crop yields will differ by crop type.' +
+        '</div>';
+}
+var html = cropWarning + '<div style="margin-bottom:20px;padding:14px 16px;background:var(--green-pale);border-radius:var(--radius-sm);border-left:4px solid var(--green-main);">' +
+    '<strong style="color:var(--green-main);">' + peerData.confidence_message + '</strong>' +
+    '<p style="font-size:0.82rem;color:var(--gray-600);margin-top:4px;">' + peerData.data_disclosure + '</p>' +
+    '</div>';
+
+  peerData.farms.forEach(function(farm) {
+    var yc = farm.yield_variance;
+    var yColor = yc >= 0 ? '#166534' : '#991b1b';
+    var yBg = yc >= 0 ? '#dcfce7' : '#fee2e2';
+    var yIcon = yc >= 0 ? '+' : '';
+
+    html += '<div class="peer-farm-card">' +
+      '<div class="peer-farm-header">' +
+        '<div>' +
+          '<div class="peer-farm-name">' + farm.name + '</div>' +
+          '<div class="peer-farm-location">' + farm.county + ' County, ' + farm.state +
+            (farm.verified ? ' <span class="verified-badge">Verified</span>' : '') +
+          '</div>' +
+        '</div>' +
+        '<div style="font-size:0.78rem;color:var(--gray-400);">Match: ' + Math.round(farm.match_score * 100) + '%</div>' +
+      '</div>' +
+      '<div class="peer-metrics">' +
+        '<div class="peer-metric"><span class="peer-metric-val">' + farm.n_applied + '</span><span class="peer-metric-lbl">N Applied lbs/ac</span></div>' +
+        '<div class="peer-metric"><span class="peer-metric-val">' + farm.yield + '</span><span class="peer-metric-lbl">Yield bu/ac</span></div>' +
+        '<div class="peer-metric"><span class="peer-metric-val" style="color:' + yColor + ';background:' + yBg + ';padding:2px 6px;border-radius:6px;font-size:0.85rem;">' + yIcon + yc.toFixed(1) + '%</span><span class="peer-metric-lbl">vs Historical</span></div>' +
+        '<div class="peer-metric"><span class="peer-metric-val">$' + farm.cost_saved.toFixed(2) + '</span><span class="peer-metric-lbl">Saved $/ac</span></div>' +
+      '</div>' +
+    '</div>';
+  });
+
+  container.innerHTML = html;
+  updatePeerMap(peerData.farms);
+}
+
+function initMap() {
+  if (peerMap) return;
+  try {
+    peerMap = L.map('peer-map').setView([38.5, -92.5], 5);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'OpenStreetMap contributors'
+    }).addTo(peerMap);
+  } catch(e) {}
+}
+
+function updatePeerMap(farms) {
+  if (!peerMap) { setTimeout(function(){ updatePeerMap(farms); }, 500); return; }
+  peerMap.eachLayer(function(layer) {
+    if (layer instanceof L.Marker) peerMap.removeLayer(layer);
+  });
+  farms.forEach(function(farm) {
+    if (farm.lat && farm.lng) {
+      L.marker([farm.lat, farm.lng]).addTo(peerMap)
+        .bindPopup('<strong>' + farm.name + '</strong><br>' +
+          farm.county + ' County, ' + farm.state + '<br>' +
+          'N Applied: ' + farm.n_applied + ' lbs/acre<br>' +
+          'Yield: ' + farm.yield + ' bu/acre<br>' +
+          'Saved: $' + farm.cost_saved.toFixed(2) + '/acre');
+    }
+  });
+}
+
+async function generateBrief() {
+  if (!currentPrescription) { showToast('Generate a prescription first', 'error'); return; }
+  showLoading('Generating agronomist brief...');
+  var payload = {
+    farm_name: document.getElementById('farmName').value,
+    farm_acres: parseFloat(document.getElementById('farmAcres').value),
+    county: getCounty(),
+    state: document.getElementById('stateSelect').value,
+    crop: document.getElementById('cropSelect').value,
+    rotation: document.getElementById('rotationSelect').value,
+    om_pct: parseFloat(document.getElementById('omPct').value),
+    soil_test_age_months: parseInt(document.getElementById('soilTestAge').value),
+    corn_price_usd_bu: parseFloat(document.getElementById('cornPrice').value),
+    n_cost_usd_lb: parseFloat(document.getElementById('nCost').value),
+    current_n_rate_lbs_ac: parseFloat(document.getElementById('currentNRate').value),
+    fertilizer_type: document.getElementById('fertilizerType').value,
+    farmer_name: document.getElementById('farmerName').value,
+    agronomist_name: document.getElementById('agronomistName').value
+  };
+  try {
+    var res = await fetch('/api/agronomist-brief', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    var data = await res.json();
+    document.getElementById('briefOutput').textContent = data.brief;
+    showToast('Agronomist brief generated', 'success');
+  } catch(e) {
+    showToast('Failed to generate brief', 'error');
+  } finally {
+    hideLoading();
+  }
+}
+
+function copyBrief() {
+  var text = document.getElementById('briefOutput').textContent;
+  navigator.clipboard.writeText(text).then(function() {
+    showToast('Copied to clipboard', 'success');
+  });
+}
+
+async function submitOutcome() {
+  var mainCounty = document.getElementById('countyManual').value ||
+                   document.getElementById('countySelect').value;
+  var mainState = document.getElementById('stateSelect').value;
+  if (mainCounty) document.getElementById('outCounty').value = mainCounty;
+  if (mainState) document.getElementById('outState').value = mainState;
+
+  showLoading('Recording your harvest data...');
+  var payload = {
+    farm_name: 'My Farm',
+    county: document.getElementById('outCounty').value,
+    state: document.getElementById('outState').value,
+    crop: document.getElementById('outCrop').value,
+    farm_acres: parseFloat(document.getElementById('outAcres').value),
+    prescribed_n: parseFloat(document.getElementById('outPrescribedN').value),
+    actual_n: parseFloat(document.getElementById('outActualN').value),
+    actual_yield: parseFloat(document.getElementById('outActualYield').value),
+    historical_avg_yield: parseFloat(document.getElementById('outHistYield').value),
+    weather_normal: document.getElementById('outWeather').value === 'true'
+  };
+  try {
+    var res = await fetch('/api/outcome', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    var data = await res.json();
+    var o = data.outcome;
+    var yieldPositive = o.yield_change >= 0;
+
+    document.getElementById('outcomeResult').style.display = 'block';
+    document.getElementById('outcomeResult').innerHTML =
+      '<div class="outcome-result">' +
+        '<div style="font-family:Sora,sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:16px;">Harvest Data Recorded</div>' +
+        '<div class="outcome-grid">' +
+          '<div class="outcome-metric"><span class="outcome-metric-val">$' + Math.abs(o.total_saved_usd).toLocaleString() + '</span><span class="outcome-metric-lbl">Total Season Savings</span></div>' +
+          '<div class="outcome-metric"><span class="outcome-metric-val">' + o.actual_yield + '</span><span class="outcome-metric-lbl">Actual Yield bu/ac</span></div>' +
+          '<div class="outcome-metric"><span class="outcome-metric-val" style="color:' + (yieldPositive ? '#fbbf24' : '#f87171') + ';">' + (yieldPositive ? '+' : '') + o.yield_change.toFixed(1) + '</span><span class="outcome-metric-lbl">Yield Change bu/ac</span></div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="explanation-box" style="margin-bottom:16px;">' + data.analysis + '</div>' +
+      '<div style="padding:14px;background:var(--green-pale);border-radius:8px;font-size:0.85rem;color:var(--green-main);font-weight:600;">' + data.message + '</div>';
+
+    showToast('Harvest data recorded successfully', 'success');
+  } catch(e) {
+    showToast('Failed to record outcome', 'error');
+  } finally {
+    hideLoading();
+  }
+}
+
+function showLoading(msg) {
+  document.getElementById('loadingOverlay').classList.add('active');
+  document.querySelector('.loading-text').textContent = msg || 'Loading...';
+}
+
+function hideLoading() {
+  document.getElementById('loadingOverlay').classList.remove('active');
+}
+
+function showToast(msg, type) {
+  var toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.className = 'toast ' + (type || 'success') + ' show';
+  setTimeout(function() { toast.classList.remove('show'); }, 3000);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  loadLivePrices();
+  loadCounties();
+});
+</script>
+</body>
+</html>

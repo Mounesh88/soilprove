@@ -1,0 +1,236 @@
+{
+  "methodology": {
+    "name": "Maximum Return to Nitrogen (MRTN)",
+    "source": "University of Illinois and Iowa State University Extension",
+    "description": "Economic optimum nitrogen rate calculation based on multi-year corn nitrogen response trials across the Corn Belt",
+    "citation": "Sawyer J., Nafziger E., Randall G., Bundy L., Rehm G., Joern B. (2006). Concepts and Rationale for Regional Nitrogen Rate Guidelines for Corn.",
+    "applicability": "Corn-corn and corn-soybean rotations in Corn Belt states"
+  },
+  "corn": {
+    "corn_soybean_rotation": {
+      "description": "Corn following soybeans - lower N requirement due to soybean N credit",
+      "soybean_n_credit_lbs_ac": 40,
+      "productivity_classes": {
+        "high": {
+          "description": "High productivity soils - deep, well-drained, high OM",
+          "typical_om_pct_range": [3.5, 6.0],
+          "typical_yield_range_bu_ac": [200, 240],
+          "mrtn_by_price_ratio": {
+            "0.05": {"eonr": 120, "range_low": 105, "range_high": 135},
+            "0.08": {"eonr": 140, "range_low": 125, "range_high": 155},
+            "0.10": {"eonr": 148, "range_low": 133, "range_high": 163},
+            "0.12": {"eonr": 155, "range_low": 140, "range_high": 170},
+            "0.15": {"eonr": 162, "range_low": 147, "range_high": 177},
+            "0.18": {"eonr": 168, "range_low": 153, "range_high": 183},
+            "0.20": {"eonr": 172, "range_low": 157, "range_high": 187}
+          }
+        },
+        "medium_high": {
+          "description": "Medium-high productivity soils",
+          "typical_om_pct_range": [2.5, 3.5],
+          "typical_yield_range_bu_ac": [175, 205],
+          "mrtn_by_price_ratio": {
+            "0.05": {"eonr": 130, "range_low": 115, "range_high": 145},
+            "0.08": {"eonr": 150, "range_low": 135, "range_high": 165},
+            "0.10": {"eonr": 158, "range_low": 143, "range_high": 173},
+            "0.12": {"eonr": 165, "range_low": 150, "range_high": 180},
+            "0.15": {"eonr": 172, "range_low": 157, "range_high": 187},
+            "0.18": {"eonr": 178, "range_low": 163, "range_high": 193},
+            "0.20": {"eonr": 182, "range_low": 167, "range_high": 197}
+          }
+        },
+        "medium": {
+          "description": "Medium productivity soils",
+          "typical_om_pct_range": [1.5, 2.5],
+          "typical_yield_range_bu_ac": [155, 185],
+          "mrtn_by_price_ratio": {
+            "0.05": {"eonr": 138, "range_low": 123, "range_high": 153},
+            "0.08": {"eonr": 158, "range_low": 143, "range_high": 173},
+            "0.10": {"eonr": 166, "range_low": 151, "range_high": 181},
+            "0.12": {"eonr": 173, "range_low": 158, "range_high": 188},
+            "0.15": {"eonr": 180, "range_low": 165, "range_high": 195},
+            "0.18": {"eonr": 186, "range_low": 171, "range_high": 201},
+            "0.20": {"eonr": 190, "range_low": 175, "range_high": 205}
+          }
+        },
+        "low": {
+          "description": "Low productivity soils - shallow, poorly drained, low OM",
+          "typical_om_pct_range": [0.5, 1.5],
+          "typical_yield_range_bu_ac": [120, 160],
+          "mrtn_by_price_ratio": {
+            "0.05": {"eonr": 110, "range_low": 95, "range_high": 125},
+            "0.08": {"eonr": 128, "range_low": 113, "range_high": 143},
+            "0.10": {"eonr": 135, "range_low": 120, "range_high": 150},
+            "0.12": {"eonr": 141, "range_low": 126, "range_high": 156},
+            "0.15": {"eonr": 148, "range_low": 133, "range_high": 163},
+            "0.18": {"eonr": 153, "range_low": 138, "range_high": 168},
+            "0.20": {"eonr": 157, "range_low": 142, "range_high": 172}
+          }
+        }
+      }
+    },
+    "corn_corn_rotation": {
+      "description": "Continuous corn - higher N requirement, no soybean credit",
+      "soybean_n_credit_lbs_ac": 0,
+      "additional_n_lbs_ac": 25,
+      "productivity_classes": {
+        "high": {
+          "description": "High productivity soils",
+          "typical_om_pct_range": [3.5, 6.0],
+          "typical_yield_range_bu_ac": [190, 225],
+          "mrtn_by_price_ratio": {
+            "0.05": {"eonr": 145, "range_low": 130, "range_high": 160},
+            "0.08": {"eonr": 165, "range_low": 150, "range_high": 180},
+            "0.10": {"eonr": 173, "range_low": 158, "range_high": 188},
+            "0.12": {"eonr": 180, "range_low": 165, "range_high": 195},
+            "0.15": {"eonr": 187, "range_low": 172, "range_high": 202},
+            "0.18": {"eonr": 193, "range_low": 178, "range_high": 208},
+            "0.20": {"eonr": 197, "range_low": 182, "range_high": 212}
+          }
+        },
+        "medium_high": {
+          "description": "Medium-high productivity soils",
+          "typical_om_pct_range": [2.5, 3.5],
+          "typical_yield_range_bu_ac": [165, 195],
+          "mrtn_by_price_ratio": {
+            "0.05": {"eonr": 155, "range_low": 140, "range_high": 170},
+            "0.08": {"eonr": 175, "range_low": 160, "range_high": 190},
+            "0.10": {"eonr": 183, "range_low": 168, "range_high": 198},
+            "0.12": {"eonr": 190, "range_low": 175, "range_high": 205},
+            "0.15": {"eonr": 197, "range_low": 182, "range_high": 212},
+            "0.18": {"eonr": 203, "range_low": 188, "range_high": 218},
+            "0.20": {"eonr": 207, "range_low": 192, "range_high": 222}
+          }
+        },
+        "medium": {
+          "description": "Medium productivity soils",
+          "typical_om_pct_range": [1.5, 2.5],
+          "typical_yield_range_bu_ac": [145, 175],
+          "mrtn_by_price_ratio": {
+            "0.05": {"eonr": 163, "range_low": 148, "range_high": 178},
+            "0.08": {"eonr": 183, "range_low": 168, "range_high": 198},
+            "0.10": {"eonr": 191, "range_low": 176, "range_high": 206},
+            "0.12": {"eonr": 198, "range_low": 183, "range_high": 213},
+            "0.15": {"eonr": 205, "range_low": 190, "range_high": 220},
+            "0.18": {"eonr": 211, "range_low": 196, "range_high": 226},
+            "0.20": {"eonr": 215, "range_low": 200, "range_high": 230}
+          }
+        },
+        "low": {
+          "description": "Low productivity soils",
+          "typical_om_pct_range": [0.5, 1.5],
+          "typical_yield_range_bu_ac": [110, 150],
+          "mrtn_by_price_ratio": {
+            "0.05": {"eonr": 133, "range_low": 118, "range_high": 148},
+            "0.08": {"eonr": 151, "range_low": 136, "range_high": 166},
+            "0.10": {"eonr": 158, "range_low": 143, "range_high": 173},
+            "0.12": {"eonr": 164, "range_low": 149, "range_high": 179},
+            "0.15": {"eonr": 171, "range_low": 156, "range_high": 186},
+            "0.18": {"eonr": 176, "range_low": 161, "range_high": 191},
+            "0.20": {"eonr": 180, "range_low": 165, "range_high": 195}
+          }
+        }
+      }
+    }
+  },
+  "wheat": {
+    "winter_wheat": {
+      "description": "Winter wheat nitrogen recommendations - University of Missouri Extension",
+      "productivity_classes": {
+        "high": {
+          "typical_yield_range_bu_ac": [65, 90],
+          "recommended_n_lbs_ac": 120,
+          "range_low": 100,
+          "range_high": 140,
+          "split_application": true,
+          "fall_n_pct": 30,
+          "spring_n_pct": 70
+        },
+        "medium": {
+          "typical_yield_range_bu_ac": [45, 65],
+          "recommended_n_lbs_ac": 100,
+          "range_low": 80,
+          "range_high": 120,
+          "split_application": true,
+          "fall_n_pct": 30,
+          "spring_n_pct": 70
+        },
+        "low": {
+          "typical_yield_range_bu_ac": [25, 45],
+          "recommended_n_lbs_ac": 80,
+          "range_low": 60,
+          "range_high": 100,
+          "split_application": true,
+          "fall_n_pct": 30,
+          "spring_n_pct": 70
+        }
+      }
+    }
+  },
+  "sorghum": {
+    "grain_sorghum": {
+      "description": "Grain sorghum nitrogen recommendations",
+      "productivity_classes": {
+        "high": {
+          "typical_yield_range_bu_ac": [100, 140],
+          "recommended_n_lbs_ac": 120,
+          "range_low": 100,
+          "range_high": 140
+        },
+        "medium": {
+          "typical_yield_range_bu_ac": [70, 100],
+          "recommended_n_lbs_ac": 100,
+          "range_low": 80,
+          "range_high": 120
+        },
+        "low": {
+          "typical_yield_range_bu_ac": [40, 70],
+          "recommended_n_lbs_ac": 80,
+          "range_low": 60,
+          "range_high": 100
+        }
+      }
+    }
+  },
+  "om_n_credit": {
+    "description": "Organic matter nitrogen credit calculation",
+    "formula": "om_credit = (om_pct - 2.5) * 14",
+    "base_om_pct": 2.5,
+    "credit_per_om_unit": 14,
+    "min_credit_lbs_ac": -20,
+    "max_credit_lbs_ac": 30,
+    "note": "Based on Sawyer et al. 2006. Positive credit reduces N recommendation. Negative credit increases it."
+  },
+  "price_ratio_calculation": {
+    "description": "N cost to corn price ratio drives EONR",
+    "formula": "price_ratio = n_cost_per_lb / corn_price_per_bu",
+    "typical_range": [0.05, 0.25],
+    "note": "Higher ratio means N is expensive relative to corn - reduce application rate"
+  },
+  "confidence_thresholds": {
+    "high": {
+      "min_data_completeness": 0.85,
+      "soil_test_max_age_months": 24,
+      "min_peer_farms": 5,
+      "label": "HIGH",
+      "color": "#22C55E",
+      "description": "Strong recommendation based on complete data"
+    },
+    "moderate": {
+      "min_data_completeness": 0.65,
+      "soil_test_max_age_months": 36,
+      "min_peer_farms": 3,
+      "label": "MODERATE",
+      "color": "#F59E0B",
+      "description": "Good recommendation - verify with your agronomist"
+    },
+    "low": {
+      "min_data_completeness": 0.0,
+      "soil_test_max_age_months": 999,
+      "min_peer_farms": 0,
+      "label": "LOW",
+      "color": "#EF4444",
+      "description": "Limited data - use as starting point only"
+    }
+  }
+}

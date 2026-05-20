@@ -1,0 +1,609 @@
+{
+  "states": {
+    "Missouri": {
+      "abbreviation": "MO",
+      "demo_state": true,
+      "avg_corn_yield_bu_ac": 184,
+      "avg_n_application_lbs_ac": 188,
+      "avg_fertilizer_cost_usd_ac": 124,
+      "avg_farm_size_acres": 900,
+      "counties": {
+        "Cape Girardeau": {
+          "fips": "29031",
+          "demo_county": true,
+          "soil_series": "Wyatt-Vandalia complex",
+          "soil_productivity_class": "Medium-High",
+          "avg_om_pct": 2.8,
+          "avg_cec": 18.4,
+          "drainage_class": "Moderately well drained",
+          "avg_corn_yield_bu_ac": 187,
+          "yield_history": {
+            "2024": 187,
+            "2023": 178,
+            "2022": 192,
+            "2021": 183,
+            "2020": 176,
+            "2019": 168,
+            "2018": 180
+          },
+          "avg_n_application_lbs_ac": 185,
+          "primary_crops": ["corn", "soybeans", "wheat"],
+          "lat": 37.3059,
+          "lng": -89.5181
+        },
+        "New Madrid": {
+          "fips": "29143",
+          "demo_county": false,
+          "soil_series": "Commerce-Sharkey complex",
+          "soil_productivity_class": "Medium",
+          "avg_om_pct": 2.2,
+          "avg_cec": 22.1,
+          "drainage_class": "Poorly drained",
+          "avg_corn_yield_bu_ac": 201,
+          "yield_history": {
+            "2024": 201,
+            "2023": 189,
+            "2022": 208,
+            "2021": 195,
+            "2020": 187,
+            "2019": 178,
+            "2018": 193
+          },
+          "avg_n_application_lbs_ac": 192,
+          "primary_crops": ["corn", "soybeans", "cotton", "rice"],
+          "lat": 36.5867,
+          "lng": -89.5275
+        },
+        "Scott": {
+          "fips": "29201",
+          "demo_county": false,
+          "soil_series": "Sikeston-Canalou complex",
+          "soil_productivity_class": "Medium-High",
+          "avg_om_pct": 2.4,
+          "avg_cec": 19.8,
+          "drainage_class": "Moderately well drained",
+          "avg_corn_yield_bu_ac": 192,
+          "yield_history": {
+            "2024": 192,
+            "2023": 181,
+            "2022": 198,
+            "2021": 188,
+            "2020": 179,
+            "2019": 171,
+            "2018": 185
+          },
+          "avg_n_application_lbs_ac": 188,
+          "primary_crops": ["corn", "soybeans", "wheat", "sorghum"],
+          "lat": 36.8428,
+          "lng": -89.5195
+        },
+        "Mississippi": {
+          "fips": "29133",
+          "demo_county": false,
+          "soil_series": "Tiptonville-Crevasse complex",
+          "soil_productivity_class": "High",
+          "avg_om_pct": 1.9,
+          "avg_cec": 16.2,
+          "drainage_class": "Well drained",
+          "avg_corn_yield_bu_ac": 204,
+          "yield_history": {
+            "2024": 204,
+            "2023": 193,
+            "2022": 211,
+            "2021": 198,
+            "2020": 190,
+            "2019": 182,
+            "2018": 196
+          },
+          "avg_n_application_lbs_ac": 195,
+          "primary_crops": ["corn", "soybeans", "cotton", "rice"],
+          "lat": 36.8006,
+          "lng": -89.3134
+        },
+        "Pemiscot": {
+          "fips": "29155",
+          "demo_county": false,
+          "soil_series": "Bowdre-Tunica complex",
+          "soil_productivity_class": "Medium",
+          "avg_om_pct": 2.1,
+          "avg_cec": 24.3,
+          "drainage_class": "Poorly drained",
+          "avg_corn_yield_bu_ac": 198,
+          "yield_history": {
+            "2024": 198,
+            "2023": 186,
+            "2022": 205,
+            "2021": 192,
+            "2020": 184,
+            "2019": 175,
+            "2018": 190
+          },
+          "avg_n_application_lbs_ac": 190,
+          "primary_crops": ["corn", "soybeans", "cotton", "rice"],
+          "lat": 36.2564,
+          "lng": -89.7859
+        },
+        "Dunklin": {
+          "fips": "29069",
+          "demo_county": false,
+          "soil_series": "Dundee-Foley complex",
+          "soil_productivity_class": "Medium",
+          "avg_om_pct": 2.3,
+          "avg_cec": 20.1,
+          "drainage_class": "Moderately well drained",
+          "avg_corn_yield_bu_ac": 195,
+          "yield_history": {
+            "2024": 195,
+            "2023": 184,
+            "2022": 202,
+            "2021": 189,
+            "2020": 181,
+            "2019": 172,
+            "2018": 187
+          },
+          "avg_n_application_lbs_ac": 187,
+          "primary_crops": ["corn", "soybeans", "cotton", "wheat"],
+          "lat": 36.2767,
+          "lng": -90.0715
+        }
+      }
+    },
+    "Iowa": {
+      "abbreviation": "IA",
+      "demo_state": false,
+      "avg_corn_yield_bu_ac": 202,
+      "avg_n_application_lbs_ac": 175,
+      "avg_fertilizer_cost_usd_ac": 115,
+      "avg_farm_size_acres": 1200,
+      "counties": {
+        "Story": {
+          "fips": "19169",
+          "demo_county": false,
+          "soil_series": "Nicollet-Webster complex",
+          "soil_productivity_class": "High",
+          "avg_om_pct": 3.8,
+          "avg_cec": 28.4,
+          "drainage_class": "Somewhat poorly drained",
+          "avg_corn_yield_bu_ac": 215,
+          "yield_history": {
+            "2024": 215,
+            "2023": 204,
+            "2022": 221,
+            "2021": 208,
+            "2020": 199,
+            "2019": 190,
+            "2018": 206
+          },
+          "avg_n_application_lbs_ac": 172,
+          "primary_crops": ["corn", "soybeans"],
+          "lat": 42.0307,
+          "lng": -93.4630
+        },
+        "Hamilton": {
+          "fips": "19079",
+          "demo_county": false,
+          "soil_series": "Clarion-Nicollet-Webster",
+          "soil_productivity_class": "High",
+          "avg_om_pct": 4.1,
+          "avg_cec": 30.2,
+          "drainage_class": "Somewhat poorly drained",
+          "avg_corn_yield_bu_ac": 218,
+          "yield_history": {
+            "2024": 218,
+            "2023": 207,
+            "2022": 224,
+            "2021": 211,
+            "2020": 202,
+            "2019": 193,
+            "2018": 209
+          },
+          "avg_n_application_lbs_ac": 168,
+          "primary_crops": ["corn", "soybeans"],
+          "lat": 42.3816,
+          "lng": -93.6974
+        },
+        "Boone": {
+          "fips": "19015",
+          "demo_county": false,
+          "soil_series": "Clarion-Storden-Canisteo",
+          "soil_productivity_class": "High",
+          "avg_om_pct": 3.6,
+          "avg_cec": 27.8,
+          "drainage_class": "Well drained",
+          "avg_corn_yield_bu_ac": 212,
+          "yield_history": {
+            "2024": 212,
+            "2023": 201,
+            "2022": 218,
+            "2021": 205,
+            "2020": 196,
+            "2019": 187,
+            "2018": 203
+          },
+          "avg_n_application_lbs_ac": 174,
+          "primary_crops": ["corn", "soybeans"],
+          "lat": 42.0369,
+          "lng": -93.9302
+        }
+      }
+    },
+    "Illinois": {
+      "abbreviation": "IL",
+      "demo_state": false,
+      "avg_corn_yield_bu_ac": 210,
+      "avg_n_application_lbs_ac": 170,
+      "avg_fertilizer_cost_usd_ac": 112,
+      "avg_farm_size_acres": 1400,
+      "counties": {
+        "McLean": {
+          "fips": "17113",
+          "demo_county": false,
+          "soil_series": "Drummer-Flanagan complex",
+          "soil_productivity_class": "High",
+          "avg_om_pct": 4.2,
+          "avg_cec": 31.5,
+          "drainage_class": "Poorly drained",
+          "avg_corn_yield_bu_ac": 224,
+          "yield_history": {
+            "2024": 224,
+            "2023": 213,
+            "2022": 230,
+            "2021": 217,
+            "2020": 208,
+            "2019": 199,
+            "2018": 215
+          },
+          "avg_n_application_lbs_ac": 165,
+          "primary_crops": ["corn", "soybeans"],
+          "lat": 40.4942,
+          "lng": -88.9942
+        },
+        "Champaign": {
+          "fips": "17019",
+          "demo_county": false,
+          "soil_series": "Flanagan-Drummer-Catlin",
+          "soil_productivity_class": "High",
+          "avg_om_pct": 4.5,
+          "avg_cec": 33.1,
+          "drainage_class": "Poorly drained",
+          "avg_corn_yield_bu_ac": 228,
+          "yield_history": {
+            "2024": 228,
+            "2023": 217,
+            "2022": 234,
+            "2021": 221,
+            "2020": 212,
+            "2019": 203,
+            "2018": 219
+          },
+          "avg_n_application_lbs_ac": 162,
+          "primary_crops": ["corn", "soybeans"],
+          "lat": 40.1164,
+          "lng": -88.2434
+        }
+      }
+    },
+    "Indiana": {
+      "abbreviation": "IN",
+      "demo_state": false,
+      "avg_corn_yield_bu_ac": 196,
+      "avg_n_application_lbs_ac": 178,
+      "avg_fertilizer_cost_usd_ac": 117,
+      "avg_farm_size_acres": 1100,
+      "counties": {
+        "Tippecanoe": {
+          "fips": "18157",
+          "demo_county": false,
+          "soil_series": "Drummer-Raub complex",
+          "soil_productivity_class": "High",
+          "avg_om_pct": 3.4,
+          "avg_cec": 26.8,
+          "drainage_class": "Poorly drained",
+          "avg_corn_yield_bu_ac": 208,
+          "yield_history": {
+            "2024": 208,
+            "2023": 197,
+            "2022": 214,
+            "2021": 201,
+            "2020": 192,
+            "2019": 183,
+            "2018": 199
+          },
+          "avg_n_application_lbs_ac": 175,
+          "primary_crops": ["corn", "soybeans", "wheat"],
+          "lat": 40.3898,
+          "lng": -86.8636
+        }
+      }
+    },
+    "Kansas": {
+      "abbreviation": "KS",
+      "demo_state": false,
+      "avg_corn_yield_bu_ac": 168,
+      "avg_n_application_lbs_ac": 165,
+      "avg_fertilizer_cost_usd_ac": 108,
+      "avg_farm_size_acres": 1800,
+      "counties": {
+        "Finney": {
+          "fips": "20055",
+          "demo_county": false,
+          "soil_series": "Richfield-Ness complex",
+          "soil_productivity_class": "Medium",
+          "avg_om_pct": 1.8,
+          "avg_cec": 14.2,
+          "drainage_class": "Well drained",
+          "avg_corn_yield_bu_ac": 198,
+          "yield_history": {
+            "2024": 198,
+            "2023": 187,
+            "2022": 204,
+            "2021": 191,
+            "2020": 182,
+            "2019": 173,
+            "2018": 189
+          },
+          "avg_n_application_lbs_ac": 168,
+          "primary_crops": ["corn", "wheat", "sorghum"],
+          "lat": 37.9478,
+          "lng": -100.7323
+        }
+      }
+    },
+    "Nebraska": {
+      "abbreviation": "NE",
+      "demo_state": false,
+      "avg_corn_yield_bu_ac": 192,
+      "avg_n_application_lbs_ac": 172,
+      "avg_fertilizer_cost_usd_ac": 113,
+      "avg_farm_size_acres": 1600,
+      "counties": {
+        "Hamilton": {
+          "fips": "31079",
+          "demo_county": false,
+          "soil_series": "Hastings-Crete complex",
+          "soil_productivity_class": "High",
+          "avg_om_pct": 3.2,
+          "avg_cec": 24.6,
+          "drainage_class": "Well drained",
+          "avg_corn_yield_bu_ac": 204,
+          "yield_history": {
+            "2024": 204,
+            "2023": 193,
+            "2022": 210,
+            "2021": 197,
+            "2020": 188,
+            "2019": 179,
+            "2018": 195
+          },
+          "avg_n_application_lbs_ac": 170,
+          "primary_crops": ["corn", "soybeans", "wheat"],
+          "lat": 40.8247,
+          "lng": -98.0103
+        }
+      }
+    },
+    "Minnesota": {
+      "abbreviation": "MN",
+      "demo_state": false,
+      "avg_corn_yield_bu_ac": 198,
+      "avg_n_application_lbs_ac": 168,
+      "avg_fertilizer_cost_usd_ac": 110,
+      "avg_farm_size_acres": 1300,
+      "counties": {
+        "Renville": {
+          "fips": "27143",
+          "demo_county": false,
+          "soil_series": "Hanska-Glencoe complex",
+          "soil_productivity_class": "High",
+          "avg_om_pct": 4.8,
+          "avg_cec": 35.2,
+          "drainage_class": "Poorly drained",
+          "avg_corn_yield_bu_ac": 212,
+          "yield_history": {
+            "2024": 212,
+            "2023": 201,
+            "2022": 218,
+            "2021": 205,
+            "2020": 196,
+            "2019": 187,
+            "2018": 203
+          },
+          "avg_n_application_lbs_ac": 164,
+          "primary_crops": ["corn", "soybeans"],
+          "lat": 44.7916,
+          "lng": -95.0969
+        }
+      }
+    },
+    "Ohio": {
+      "abbreviation": "OH",
+      "demo_state": false,
+      "avg_corn_yield_bu_ac": 188,
+      "avg_n_application_lbs_ac": 180,
+      "avg_fertilizer_cost_usd_ac": 118,
+      "avg_farm_size_acres": 950,
+      "counties": {
+        "Darke": {
+          "fips": "39037",
+          "demo_county": false,
+          "soil_series": "Kokomo-Brookston complex",
+          "soil_productivity_class": "High",
+          "avg_om_pct": 3.1,
+          "avg_cec": 23.4,
+          "drainage_class": "Poorly drained",
+          "avg_corn_yield_bu_ac": 201,
+          "yield_history": {
+            "2024": 201,
+            "2023": 190,
+            "2022": 207,
+            "2021": 194,
+            "2020": 185,
+            "2019": 176,
+            "2018": 192
+          },
+          "avg_n_application_lbs_ac": 178,
+          "primary_crops": ["corn", "soybeans", "wheat"],
+          "lat": 40.1367,
+          "lng": -84.6216
+        }
+      }
+    },
+    "Kentucky": {
+      "abbreviation": "KY",
+      "demo_state": false,
+      "avg_corn_yield_bu_ac": 178,
+      "avg_n_application_lbs_ac": 182,
+      "avg_fertilizer_cost_usd_ac": 120,
+      "avg_farm_size_acres": 850,
+      "counties": {
+        "Christian": {
+          "fips": "21047",
+          "demo_county": false,
+          "soil_series": "Pembroke-Crider complex",
+          "soil_productivity_class": "Medium-High",
+          "avg_om_pct": 2.6,
+          "avg_cec": 20.8,
+          "drainage_class": "Well drained",
+          "avg_corn_yield_bu_ac": 189,
+          "yield_history": {
+            "2024": 189,
+            "2023": 178,
+            "2022": 195,
+            "2021": 182,
+            "2020": 173,
+            "2019": 164,
+            "2018": 180
+          },
+          "avg_n_application_lbs_ac": 180,
+          "primary_crops": ["corn", "soybeans", "wheat"],
+          "lat": 36.8381,
+          "lng": -87.4886
+        }
+      }
+    },
+    "Tennessee": {
+      "abbreviation": "TN",
+      "demo_state": false,
+      "avg_corn_yield_bu_ac": 172,
+      "avg_n_application_lbs_ac": 185,
+      "avg_fertilizer_cost_usd_ac": 122,
+      "avg_farm_size_acres": 780,
+      "counties": {
+        "Gibson": {
+          "fips": "47053",
+          "demo_county": false,
+          "soil_series": "Memphis-Loring complex",
+          "soil_productivity_class": "Medium",
+          "avg_om_pct": 1.8,
+          "avg_cec": 15.6,
+          "drainage_class": "Well drained",
+          "avg_corn_yield_bu_ac": 182,
+          "yield_history": {
+            "2024": 182,
+            "2023": 171,
+            "2022": 188,
+            "2021": 175,
+            "2020": 166,
+            "2019": 157,
+            "2018": 173
+          },
+          "avg_n_application_lbs_ac": 183,
+          "primary_crops": ["corn", "soybeans", "cotton", "wheat"],
+          "lat": 35.9764,
+          "lng": -88.9378
+        }
+      }
+    }
+  },
+  "crops": {
+    "corn": {
+      "full_name": "Corn (Maize)",
+      "typical_n_range_lbs_ac": [140, 220],
+      "price_unit": "bu",
+      "typical_yield_bu_ac": 190,
+      "n_removal_lbs_per_bu": 0.67,
+      "mrtn_applicable": true
+    },
+    "soybeans": {
+      "full_name": "Soybeans",
+      "typical_n_range_lbs_ac": [0, 30],
+      "price_unit": "bu",
+      "typical_yield_bu_ac": 52,
+      "n_removal_lbs_per_bu": 3.8,
+      "mrtn_applicable": false,
+      "note": "Soybeans fix atmospheric nitrogen. Starter N only."
+    },
+    "wheat": {
+      "full_name": "Winter Wheat",
+      "typical_n_range_lbs_ac": [80, 150],
+      "price_unit": "bu",
+      "typical_yield_bu_ac": 60,
+      "n_removal_lbs_per_bu": 1.2,
+      "mrtn_applicable": true
+    },
+    "sorghum": {
+      "full_name": "Grain Sorghum",
+      "typical_n_range_lbs_ac": [80, 150],
+      "price_unit": "bu",
+      "typical_yield_bu_ac": 85,
+      "n_removal_lbs_per_bu": 0.65,
+      "mrtn_applicable": true
+    },
+    "cotton": {
+      "full_name": "Cotton",
+      "typical_n_range_lbs_ac": [60, 110],
+      "price_unit": "lb",
+      "typical_yield_bu_ac": 900,
+      "n_removal_lbs_per_bu": 0.06,
+      "mrtn_applicable": false,
+      "note": "University of Missouri Extension N rates apply"
+    },
+    "rice": {
+      "full_name": "Rice",
+      "typical_n_range_lbs_ac": [100, 160],
+      "price_unit": "cwt",
+      "typical_yield_bu_ac": 7200,
+      "n_removal_lbs_per_bu": 0.014,
+      "mrtn_applicable": false,
+      "note": "Flood management critical for N efficiency"
+    }
+  },
+  "fertilizer_types": {
+    "anhydrous_ammonia": {
+      "full_name": "Anhydrous Ammonia (82-0-0)",
+      "n_content_pct": 82,
+      "typical_price_per_ton": 612,
+      "price_per_lb_n": 0.373
+    },
+    "uan_32": {
+      "full_name": "UAN Solution 32% (32-0-0)",
+      "n_content_pct": 32,
+      "typical_price_per_ton": 348,
+      "price_per_lb_n": 0.544
+    },
+    "urea_46": {
+      "full_name": "Urea (46-0-0)",
+      "n_content_pct": 46,
+      "typical_price_per_ton": 524,
+      "price_per_lb_n": 0.570
+    },
+    "ammonium_sulfate": {
+      "full_name": "Ammonium Sulfate (21-0-0-24S)",
+      "n_content_pct": 21,
+      "typical_price_per_ton": 412,
+      "price_per_lb_n": 0.981
+    }
+  },
+  "metadata": {
+    "data_sources": [
+      "USDA NASS Quick Stats 2024",
+      "USDA SSURGO Web Soil Survey",
+      "University of Missouri Extension",
+      "Iowa State University Extension",
+      "University of Illinois Extension",
+      "USDA AMS Fertilizer Price Reports 2025"
+    ],
+    "last_updated": "2026-05-19",
+    "version": "1.0.0"
+  }
+}
