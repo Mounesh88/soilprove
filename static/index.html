@@ -820,27 +820,27 @@ nav {
           </div>
           <div class="form-group">
             <label>Farm Acres</label>
-            <input type="number" id="outAcres" value="800" min="10">
+            <input type="number" id="outAcres" placeholder="Enter farm acres" min="10">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label>Prescribed N (lbs/acre)</label>
-            <input type="number" id="outPrescribedN" value="164" min="0" max="400">
+            <input type="number" id="outPrescribedN" placeholder="Enter prescribed N" min="0" max="400">
           </div>
           <div class="form-group">
             <label>Actual N Applied (lbs/acre)</label>
-            <input type="number" id="outActualN" value="164" min="0" max="400">
+            <input type="number" id="outActualN" placeholder="Enter actual N applied" min="0" max="400">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label>Actual Yield (bu/acre)</label>
-            <input type="number" id="outActualYield" value="189" min="0" max="500">
+            <input type="number" id="outActualYield" placeholder="Enter actual yield" min="0" max="500">
           </div>
           <div class="form-group">
             <label>Historical Avg Yield (bu/acre)</label>
-            <input type="number" id="outHistYield" value="184" min="0" max="500">
+            <input type="number" id="outHistYield" placeholder="Enter historical avg yield" min="0" max="500">
           </div>
         </div>
         <div class="form-row full">
@@ -1354,6 +1354,10 @@ async function submitOutcome() {
       '<div style="padding:14px;background:var(--green-pale);border-radius:8px;font-size:0.85rem;color:var(--green-main);font-weight:600;">' + data.message + '</div>';
 
     showToast('Harvest data recorded successfully', 'success');
+    document.getElementById('outPrescribedN').value = '';
+    document.getElementById('outActualN').value = '';
+    document.getElementById('outActualYield').value = '';
+    document.getElementById('outHistYield').value = '';
   } catch(e) {
     showToast('Failed to record outcome', 'error');
   } finally {
