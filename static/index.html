@@ -1345,7 +1345,7 @@ async function submitOutcome() {
       '<div class="outcome-result">' +
         '<div style="font-family:Sora,sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:16px;">Harvest Data Recorded</div>' +
         '<div class="outcome-grid">' +
-          '<div class="outcome-metric"><span class="outcome-metric-val">$' + Math.abs(o.total_saved_usd).toLocaleString() + '</span><span class="outcome-metric-lbl">Total Season Savings</span></div>' +
+          '<div class="outcome-metric"><span class="outcome-metric-val">$' + Math.abs(o.cost_saved_usd_ac * o.farm_acres).toLocaleString(undefined, {maximumFractionDigits:0}) + '</span><span class="outcome-metric-lbl">Total Season Savings</span></div>' +
           '<div class="outcome-metric"><span class="outcome-metric-val">' + o.actual_yield + '</span><span class="outcome-metric-lbl">Actual Yield bu/ac</span></div>' +
           '<div class="outcome-metric"><span class="outcome-metric-val" style="color:' + (yieldPositive ? '#fbbf24' : '#f87171') + ';">' + (yieldPositive ? '+' : '') + o.yield_change.toFixed(1) + '</span><span class="outcome-metric-lbl">Yield Change bu/ac</span></div>' +
         '</div>' +
