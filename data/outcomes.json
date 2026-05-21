@@ -1,1 +1,66 @@
-[] 
+[
+  {
+    "farm_name": "Test",
+    "county": "Cape Girardeau",
+    "state": "Missouri",
+    "crop": "corn",
+    "farm_acres": 800.0,
+    "prescribed_n": 145.8,
+    "actual_n": 145.8,
+    "actual_yield": 189.0,
+    "historical_avg_yield": 184.0,
+    "cost_saved_usd_ac": 14.62,
+    "total_saved_usd": 11696.0,
+    "weather_normal": true,
+    "yield_change": 5.0,
+    "submitted_at": "2026-05-20T20:12:41.519789"
+  },
+  {
+    "farm_name": "James Miller",
+    "county": "Cape Girardeau",
+    "state": "Missouri",
+    "crop": "corn",
+    "farm_acres": 800.0,
+    "prescribed_n": 145.8,
+    "actual_n": 145.8,
+    "actual_yield": 189.0,
+    "historical_avg_yield": 184.0,
+    "cost_saved_usd_ac": 14.62,
+    "total_saved_usd": 11696.0,
+    "weather_normal": true,
+    "yield_change": 5.0,
+    "submitted_at": "2026-05-20T22:27:53.144555"
+  },
+  {
+    "farm_name": "Mark Johnson",
+    "county": "Story",
+    "state": "Iowa",
+    "crop": "corn",
+    "farm_acres": 1500.0,
+    "prescribed_n": 121.8,
+    "actual_n": 121.8,
+    "actual_yield": 215.0,
+    "historical_avg_yield": 212.0,
+    "cost_saved_usd_ac": 23.57,
+    "total_saved_usd": 35355.0,
+    "weather_normal": true,
+    "yield_change": 3.0,
+    "submitted_at": "2026-05-20T22:28:00.459216"
+  },
+  {
+    "farm_name": "Erik Larson",
+    "county": "Cass",
+    "state": "Minnesota",
+    "crop": "corn",
+    "farm_acres": 3500.0,
+    "prescribed_n": 107.6,
+    "actual_n": 107.6,
+    "actual_yield": 218.0,
+    "historical_avg_yield": 215.0,
+    "cost_saved_usd_ac": 28.87,
+    "total_saved_usd": 101045.0,
+    "weather_normal": true,
+    "yield_change": 3.0,
+    "submitted_at": "2026-05-20T22:28:08.123810"
+  }
+]
