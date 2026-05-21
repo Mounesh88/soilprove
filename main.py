@@ -531,6 +531,43 @@ async def get_peer_farms(
         }
     }
 
+@app.get("/api/outcomes")
+async def get_outcomes():
+    try:
+        with open(OUTCOMES_PATH, "r", encoding="utf-8") as f:
+            outcomes = json.load(f)
+        return {
+            "success": True,
+            "total": len(outcomes),
+            "outcomes": outcomes
+        }
+    except Exception:
+        return {"success": True, "total": 0, "outcomes": []}
+
+
+@app.get("/api/outcomes/summary")
+async def get_outcomes_summary():
+    try:
+        with open(OUTCOMES_PATH, "r", encoding="utf-8") as f:
+            outcomes = json.load(f)
+        normal = [o for o in outcomes if o.get("weather_normal") == True]
+        drought = [o for o in outcomes if o.get("weather_normal") == False]
+        return {
+            "success": True,
+            "total_submissions": len(outcomes),
+            "normal_weather_count": len(normal),
+            "drought_count": len(drought),
+            "normal_weather_outcomes": normal,
+            "drought_outcomes": drought,
+            "data_quality_note": "Peer recommendations use normal weather outcomes only"
+        }
+    except Exception:
+        return {
+            "success": True,
+            "total_submissions": 0,
+            "normal_weather_count": 0,
+            "drought_count": 0
+        }
 
 if __name__ == "__main__":
     import uvicorn
