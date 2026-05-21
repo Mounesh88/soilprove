@@ -1315,8 +1315,7 @@ async function submitOutcome() {
   var mainCounty = document.getElementById('countyManual').value ||
                    document.getElementById('countySelect').value;
   var mainState = document.getElementById('stateSelect').value;
-  if (mainCounty) document.getElementById('outCounty').value = mainCounty;
-  if (mainState) document.getElementById('outState').value = mainState;
+  
 
   showLoading('Recording your harvest data...');
   var payload = {
