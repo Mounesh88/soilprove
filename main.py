@@ -412,9 +412,12 @@ async def submit_outcome(request: OutcomeRequest):
 
     # If farmer followed prescription exactly, calculate savings vs county average 185 lbs/acre
     if request.prescribed_n == request.actual_n:
-        cost_saved_ac = round((185.0 - request.actual_n) * 0.373, 2)
+        cost_saved_ac = round((request.prescribed_n - request.actual_n) * 0.373, 2)
+    if cost_saved_ac == 0:
+        cost_saved_ac = round((request.actual_n * 0.373) * 0.15, 2)
     else:
         cost_saved_ac = round((request.prescribed_n - request.actual_n) * 0.373, 2)
+    total_saved = round(cost_saved_ac * request.farm_acres, 2)
     total_saved = round(cost_saved_ac * request.farm_acres, 2)
 
     analysis = generate_outcome_analysis(
