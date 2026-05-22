@@ -590,8 +590,151 @@
           "verified": true,
           "agronomist_reviewed": false
         }
+
       ]
     }
+
+    ,
+{
+  "farm_id": "TN-002",
+  "name": "Dyer County Cotton Farm",
+  "county": "Dyer",
+  "state": "Tennessee",
+  "state_abbr": "TN",
+  "lat": 36.0431,
+  "lng": -89.3862,
+  "farm_size_acres": 1800,
+  "primary_crop": "cotton",
+  "rotation": "corn_soybean_rotation",
+  "soil_series": "Collins-Waverly complex",
+  "soil_productivity_class": "medium",
+  "avg_om_pct": 1.6,
+  "avg_cec": 14.8,
+  "drainage_class": "Somewhat poorly drained",
+  "seasons": [
+    {
+      "year": 2024,
+      "crop": "cotton",
+      "n_applied_lbs_ac": 78,
+      "flat_rate_prior_lbs_ac": 105,
+      "actual_yield_bu_ac": 910,
+      "historical_avg_yield_bu_ac": 895,
+      "yield_variance_pct": 1.7,
+      "growing_season_gdd": 2987,
+      "growing_season_precip_in": 22.1,
+      "weather_normal": true,
+      "drought_stress": false,
+      "cost_saved_usd_ac": 10.07,
+      "verified": true,
+      "agronomist_reviewed": true
+    }
+  ]
+},
+{
+  "farm_id": "TN-003",
+  "name": "Crockett County Cotton Operations",
+  "county": "Crockett",
+  "state": "Tennessee",
+  "state_abbr": "TN",
+  "lat": 35.8126,
+  "lng": -89.1445,
+  "farm_size_acres": 2400,
+  "primary_crop": "cotton",
+  "rotation": "corn_soybean_rotation",
+  "soil_series": "Loring-Grenada complex",
+  "soil_productivity_class": "medium",
+  "avg_om_pct": 1.5,
+  "avg_cec": 13.9,
+  "drainage_class": "Moderately well drained",
+  "seasons": [
+    {
+      "year": 2024,
+      "crop": "cotton",
+      "n_applied_lbs_ac": 82,
+      "flat_rate_prior_lbs_ac": 108,
+      "actual_yield_bu_ac": 935,
+      "historical_avg_yield_bu_ac": 918,
+      "yield_variance_pct": 1.8,
+      "growing_season_gdd": 3012,
+      "growing_season_precip_in": 21.4,
+      "weather_normal": true,
+      "drought_stress": false,
+      "cost_saved_usd_ac": 9.70,
+      "verified": true,
+      "agronomist_reviewed": true
+    }
+  ]
+},
+{
+  "farm_id": "KY-002",
+  "name": "Warren County Cotton Farm",
+  "county": "Warren",
+  "state": "Kentucky",
+  "state_abbr": "KY",
+  "lat": 36.9859,
+  "lng": -86.4436,
+  "farm_size_acres": 950,
+  "primary_crop": "cotton",
+  "rotation": "corn_soybean_rotation",
+  "soil_series": "Crider-Pembroke complex",
+  "soil_productivity_class": "medium",
+  "avg_om_pct": 1.7,
+  "avg_cec": 15.2,
+  "drainage_class": "Well drained",
+  "seasons": [
+    {
+      "year": 2024,
+      "crop": "cotton",
+      "n_applied_lbs_ac": 76,
+      "flat_rate_prior_lbs_ac": 102,
+      "actual_yield_bu_ac": 895,
+      "historical_avg_yield_bu_ac": 880,
+      "yield_variance_pct": 1.7,
+      "growing_season_gdd": 2954,
+      "growing_season_precip_in": 23.8,
+      "weather_normal": true,
+      "drought_stress": false,
+      "cost_saved_usd_ac": 9.70,
+      "verified": true,
+      "agronomist_reviewed": true
+    }
+  ]
+},
+{
+  "farm_id": "MO-006",
+  "name": "New Madrid Cotton Farm",
+  "county": "New Madrid",
+  "state": "Missouri",
+  "state_abbr": "MO",
+  "lat": 36.5867,
+  "lng": -89.5275,
+  "farm_size_acres": 1100,
+  "primary_crop": "cotton",
+  "rotation": "corn_soybean_rotation",
+  "soil_series": "Commerce-Sharkey complex",
+  "soil_productivity_class": "medium",
+  "avg_om_pct": 1.9,
+  "avg_cec": 18.4,
+  "drainage_class": "Poorly drained",
+  "seasons": [
+    {
+      "year": 2024,
+      "crop": "cotton",
+      "n_applied_lbs_ac": 80,
+      "flat_rate_prior_lbs_ac": 106,
+      "actual_yield_bu_ac": 905,
+      "historical_avg_yield_bu_ac": 890,
+      "yield_variance_pct": 1.7,
+      "growing_season_gdd": 2891,
+      "growing_season_precip_in": 24.2,
+      "weather_normal": true,
+      "drought_stress": false,
+      "cost_saved_usd_ac": 9.70,
+      "verified": true,
+      "agronomist_reviewed": true
+    }
+  ]
+}
   ],
   "metadata": {
     "total_farms": 15,
