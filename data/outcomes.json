@@ -158,5 +158,21 @@
     "weather_normal": true,
     "yield_change": 20.0,
     "submitted_at": "2026-05-21T21:41:39.070210"
+  },
+  {
+    "farm_name": "Mike",
+    "county": "Gibson",
+    "state": "Tennessee",
+    "crop": "cotton",
+    "farm_acres": 2200.0,
+    "prescribed_n": 80.0,
+    "actual_n": 80.0,
+    "actual_yield": 920.0,
+    "historical_avg_yield": 900.0,
+    "cost_saved_usd_ac": 9.32,
+    "total_saved_usd": 20504.0,
+    "weather_normal": true,
+    "yield_change": 20.0,
+    "submitted_at": "2026-05-21T22:16:44.610466"
   }
 ]
